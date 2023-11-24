@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список книг</title>
+</head>
+<body>
+
+<h1>Список книг</h1>
+
+<!-- Форма для пошуку книги -->
+<form action="search.php" method="GET">
+    <label for="search">Пошук:</label>
+    <input type="text" name="search" id="search">
+    <button type="submit">Шукати</button>
+</form>
+
+<!-- Вивід короткого опису книг -->
+<?php
+// Підключення до бази даних
+$conn = new mysqli("hostname", "username", "password", "database");
+
+// Перевірка з'єднання
+if ($conn->connect_error) {
+    die("Помилка з'єднання з базою даних: " . $conn->connect_error);
+}
+
+// Отримання даних про книги з бази даних
+$result = $conn->query("SELECT id, title, description FROM books");
+
+// Вивід короткого опису книг
+while ($row = $result->fetch_assoc()) {
+    echo "<h2><a href=\"book.php?id=" . $row['id'] . "\">" . $row['title'] . "</a></h2>";
+    echo "<p>" . $row['description'] . "</p>";
+}
+
+// Закриття з'єднання з базою даних
+$conn->close();
+?>
+
+</body>
+</html>
