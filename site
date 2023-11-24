@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список книг</title>
+</head>
+<body>
+
+<h1>Список книг</h1>
+
+<!-- Пошук книги -->
+<form action="search.php" method="GET">
+    <label for="search">Пошук:</label>
+    <input type="text" name="search" id="search">
+    <button type="submit">Шукати</button>
+</form>
+
+<!-- Вивід короткого опису книг -->
+<?php
+// Вивід короткого опису книг
+$result = $conn->query("SELECT id, title, description FROM books");
+while ($row = $result->fetch_assoc()) {
+    echo "<h2><a href=\"book.php?id=" . $row['id'] . "\">" . $row['title'] . "</a></h2>";
+    echo "<p>" . $row['description'] . "</p>";
+}
+?>
+
+</body>
+</html>
